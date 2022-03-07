@@ -43,6 +43,6 @@
         "config": "webpack.config.js"
       }
     }
-  },
-  "ignorePatterns": ["src/**/*.css"]
+  }
+  // "ignorePatterns": ["src/**/*.css"]
 }
