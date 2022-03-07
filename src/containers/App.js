@@ -1,7 +1,12 @@
 import React from "react";
+import Layout from "@components/Layout";
 
 function App() {
-  return <div>Mi app con react</div>;
+  return (
+    <Layout>
+      <div>Mi app con react</div>
+    </Layout>
+  );
 }
 
 export default App;

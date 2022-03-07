@@ -1,7 +1,8 @@
 import React from "react";
+import "./styles.css";
 
-function Layout() {
-  return <div>Layout</div>;
+function Layout({ children }) {
+  return <div className="Layout">{children}</div>;
 }
 
 export default Layout;
