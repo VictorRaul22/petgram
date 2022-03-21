@@ -1,7 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const shouldAnalyze = process.argv.includes("--analyze");
@@ -10,9 +8,6 @@ const plugins = [
     template: "./public/index.html",
     filename: "index.html",
     favicon: "./public/favicon.ico",
-  }),
-  new MiniCssExtractPlugin({
-    filename: "css/[name].[contenthash].css",
   }),
 ];
 
@@ -60,11 +55,6 @@ const config = {
         ],
       },
       // css
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-        exclude: /node_modules/,
-      },
       // assets
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -75,7 +65,7 @@ const config = {
   plugins,
   optimization: {
     minimize: true,
-    minimizer: [new CssMinimizerPugin(), new TerserPlugin()],
+    minimizer: [new TerserPlugin()],
     splitChunks: {
       chunks: "all",
     },

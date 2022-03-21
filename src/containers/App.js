@@ -1,12 +1,9 @@
 import React from "react";
-import Layout from "@components/Layout";
+// import Layout from "@components/Layout";
+import { ListOfCategories } from "@components/ListOfCategories";
 
 function App() {
-  return (
-    <Layout>
-      <div>Mi app con react</div>
-    </Layout>
-  );
+  return <ListOfCategories />;
 }
 
-export default App;
+export { App };
