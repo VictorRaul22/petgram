@@ -1,23 +1,31 @@
 import React from "react";
 import { Logo } from "@components/Logo";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { NavBar } from "@components/NavBar";
+import { useSelector } from "react-redux";
 import { GlobalStyle } from "./styles/GlobalStyles";
-import { PhotoCardWithQuery } from "./container/PhotoCardWithQuery";
 import { Home } from "./pages/Home";
+import { Detail } from "./pages/Detail";
+import { Favs } from "./pages/Favs";
+import { User } from "./pages/Users";
+import { NotRegisterUser } from "./pages/NotRegisterUser";
 
 function App() {
+  const isAuth = useSelector((state) => state.user.isAuth);
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Logo />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<PhotoCardWithQuery />} />
         <Route path="/pet/:petId" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/favs" element={isAuth ? <Favs /> : <NotRegisterUser />} />
+        <Route path="/user" element={isAuth ? <User /> : <NotRegisterUser />} />
         <Route path="*" element={<h2>Error</h2>} />
       </Routes>
+      <NavBar />
     </BrowserRouter>
   );
 }
-
 export { App };

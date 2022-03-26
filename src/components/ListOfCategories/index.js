@@ -1,25 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Category } from "@components/Category";
 import { List, Item } from "./styles";
+import { useCategoriesData } from "../../hooks/useCategoriesData";
 // eslint-disable-next-line import/no-relative-packages
-// import bd from "../../../api/db.json
-function useCategoriesData() {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    fetch(
-      "https://petgram-server-victorr-i3daplbkd-victorraul22.vercel.app/categories"
-    )
-      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
-      .then((json) => {
-        setCategories(json);
-        setLoading(false);
-      })
-      .catch((err) => window.console.log(err));
-  }, []);
-  return { categories, loading };
-}
 
 function ListOfCategories() {
   const { categories, loading } = useCategoriesData();
@@ -35,6 +18,7 @@ function ListOfCategories() {
       document.removeEventListener("scroll", onScroll);
     };
   }, [translade]);
+
   const redereList = (fixed, showTranlade) => (
     <List fixed={fixed} translate={showTranlade}>
       {loading ? (
