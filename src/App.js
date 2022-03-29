@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Logo } from "@components/Logo";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { NavBar } from "@components/NavBar";
-import { useSelector } from "react-redux";
 import { GlobalStyle } from "./styles/GlobalStyles";
 import { Home } from "./pages/Home";
 import { Detail } from "./pages/Detail";
 import { Favs } from "./pages/Favs";
 import { User } from "./pages/Users";
 import { NotRegisterUser } from "./pages/NotRegisterUser";
+import { context } from "./Context/AppContext";
 
 function App() {
-  const isAuth = useSelector((state) => state.user.isAuth);
+  // const isAuth = true;
+  const { isAuth } = useContext(context);
+  // console.log(isAuth)
   return (
     <BrowserRouter>
       <GlobalStyle />

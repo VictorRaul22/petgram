@@ -1,23 +1,51 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { compose, createStore } from "redux";
-import { Provider } from "react-redux";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+  ApolloLink,
+  from,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import { App } from "./App";
-import { rootReducer } from "./reducer/rootReducer";
+import { AppContext } from "./Context/AppContext";
+// import { useInitialState } from "./hooks/useInitialState";
+const authMiddleware = new ApolloLink((operation, forward) => {
+  const token = window.sessionStorage.getItem("token");
+  if (token) {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  return forward(operation);
+});
+const errorMiddleware = onError(({ networkError }) => {
+  if (networkError && networkError.result.code === "invalid_token") {
+    window.sessionStorage.removeItem("token");
+    window.location = "/user";
+  }
+});
 
 const client = new ApolloClient({
-  uri: "https://petgram-server-victorr.vercel.app/graphql",
   cache: new InMemoryCache(),
+  link: from([
+    errorMiddleware,
+    authMiddleware,
+    new HttpLink({
+      uri: "https://petgram-server-victorr.vercel.app/graphql",
+    }),
+  ]),
 });
-const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const composeEnhacer = composeAlt();
-const store = createStore(rootReducer, composeEnhacer);
+// const initialState = useInitialState();
 ReactDOM.render(
-  <Provider store={store}>
+  <AppContext>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </Provider>,
+  </AppContext>,
   document.getElementById("root")
 );

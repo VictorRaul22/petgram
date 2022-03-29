@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   entry: "./src/index.js",
@@ -40,7 +41,7 @@ module.exports = {
       // css
       // assets
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|webp)$/,
         type: "asset",
       },
     ],
@@ -51,6 +52,11 @@ module.exports = {
       filename: "index.html",
       favicon: "./public/favicon.ico",
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./src/assets/login.webp", to: "" }
+      ]
+    })
   ],
   devServer: {
     historyApiFallback: true,

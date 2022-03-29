@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const shouldAnalyze = process.argv.includes("--analyze");
 const plugins = [
@@ -9,6 +10,11 @@ const plugins = [
     filename: "index.html",
     favicon: "./public/favicon.ico",
   }),
+  new CopyWebpackPlugin({
+    patterns: [
+      { from: "./src/assets/login.webp", to: "" }
+    ]
+  })
 ];
 
 if (shouldAnalyze) {
@@ -57,7 +63,7 @@ const config = {
       // css
       // assets
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|webp)$/,
         type: "asset",
       },
     ],

@@ -1,20 +1,10 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { iniciarSession } from "../actions";
+import React, { useContext } from "react";
+import { UserForm } from "@components/UserForm";
+import { context } from "../Context/AppContext";
 
 function NotRegisterUser() {
-  const dispatch = useDispatch();
-  const onclick = () => {
-    dispatch(iniciarSession());
-  };
-  return (
-    <div>
-      <h1>NotRegisterUser</h1>
-      <button type="button" onClick={onclick}>
-        Inciar Session
-      </button>
-    </div>
-  );
+  const { activateAuth } = useContext(context);
+  return <UserForm activateAuth={activateAuth} />;
 }
 
 export { NotRegisterUser };
