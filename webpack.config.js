@@ -11,10 +11,8 @@ const plugins = [
     favicon: "./public/favicon.ico",
   }),
   new CopyWebpackPlugin({
-    patterns: [
-      { from: "./src/assets/login.webp", to: "" }
-    ]
-  })
+    patterns: [{ from: "./src/assets/login.webp", to: "" }],
+  }),
 ];
 
 if (shouldAnalyze) {

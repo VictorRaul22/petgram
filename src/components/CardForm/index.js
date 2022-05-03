@@ -1,4 +1,5 @@
 import React from "react";
+import SubmitButton from "@components/SubmitButton";
 import { useInputValue } from "../../hooks/useInputValue";
 import {
   Figure,
@@ -8,7 +9,6 @@ import {
   Image,
   Form,
   Input,
-  Button,
   Card,
   Error,
 } from "./styles";
@@ -53,9 +53,7 @@ function CardForm({
           disabled={disabled}
           onChange={password.onChange}
         />
-        <Button type="submit" disabled={disabled}>
-          {title}
-        </Button>
+        <SubmitButton disabled={disabled}>{title}</SubmitButton>
       </Form>
       {!!errorMsg && <Error>{errorMsg}</Error>}
       <Text>

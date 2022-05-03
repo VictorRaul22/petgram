@@ -9,6 +9,7 @@ import { Favs } from "./pages/Favs";
 import { User } from "./pages/Users";
 import { NotRegisterUser } from "./pages/NotRegisterUser";
 import { context } from "./Context/AppContext";
+import NotFound from "./pages/NotFound";
 
 function App() {
   // const isAuth = true;
@@ -24,7 +25,7 @@ function App() {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/favs" element={isAuth ? <Favs /> : <NotRegisterUser />} />
         <Route path="/user" element={isAuth ? <User /> : <NotRegisterUser />} />
-        <Route path="*" element={<h2>Error</h2>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <NavBar />
     </BrowserRouter>

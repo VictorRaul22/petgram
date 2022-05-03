@@ -11,7 +11,7 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { App } from "./App";
 import { AppContext } from "./Context/AppContext";
-// import { useInitialState } from "./hooks/useInitialState";
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   const token = window.sessionStorage.getItem("token");
   if (token) {
@@ -23,7 +23,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   }
   return forward(operation);
 });
-const errorMiddleware = onError(({ networkError }) => {
+const errorMiddleware = onError((error) => {
+  const { networkError } = error;
+  window.console.log(error, networkError, "Error en index");
   if (networkError && networkError.result.code === "invalid_token") {
     window.sessionStorage.removeItem("token");
     window.location = "/user";

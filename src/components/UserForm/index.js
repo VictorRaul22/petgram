@@ -19,7 +19,7 @@ function UserForm({ activateAuth }) {
                 activateAuth(login);
               });
             };
-            const errorMsg = error && "Error al iniciar session.";
+            const errorMsg = error && "Error al iniciar session";
             return (
               <CardForm
                 title="Iniciar Session"
