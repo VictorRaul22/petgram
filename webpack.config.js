@@ -19,7 +19,12 @@ if (shouldAnalyze) {
   const { BundleAnalyzerPlugin } = module.require("webpack-bundle-analyzer");
   plugins.push(new BundleAnalyzerPlugin());
 }
-
+/*
+ * Para usar el profile en modo produccion es nesesario agregar estos alias, yaque react los desabilito
+ * pues generar una carga extra
+    'react-dom$': 'react-dom/profiling',
+    'scheduler/tracing': 'scheduler/tracing-profiling',
+ */
 const config = {
   entry: "./src/index.js",
   mode: "production",
@@ -36,6 +41,8 @@ const config = {
       "@container": path.resolve(__dirname, "src/containers"),
       "@utils": path.resolve(__dirname, "src/utils"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
+      'react-dom$': 'react-dom/profiling',
+      'scheduler/tracing': 'scheduler/tracing-profiling',
     },
   },
   devtool: "source-map",
@@ -71,9 +78,37 @@ const config = {
     minimize: true,
     minimizer: [new TerserPlugin()],
     splitChunks: {
-      chunks: "all",
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'assets/ventor',
+          chunks: 'all',
+          reuseExistingChunk: true,
+          priority: -40,
+        },
+        react: {
+          test: /[\\/]node_modules[\\/](react|react-dom|react-helmet|react-icons|react-router-dom)[\\/]/,
+          name: 'assets/react',
+          chunks: 'all',
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        graphql: {
+          test: /[\\/]node_modules[\\/](@apollo[\\/]client|graphql)[\\/]/,
+          name: 'assets/graphql',
+          chunks: 'all',
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+        polyfill: {
+          test: /[\\/]node_modules[\\/](intersection-observer)[\\/]/,
+          name: 'assets/polyfill',
+          chunks: 'all',
+          priority: -30,
+          reuseExistingChunk: true,
+        },
+      },
     },
   },
 };
-
 module.exports = config;

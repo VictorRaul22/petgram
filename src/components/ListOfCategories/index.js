@@ -4,7 +4,7 @@ import { List, Item } from "./styles";
 import { useCategoriesData } from "../../hooks/useCategoriesData";
 // eslint-disable-next-line import/no-relative-packages
 
-function ListOfCategories() {
+const ListOfCategoriesComponent = () => {
   const { categories, loading } = useCategoriesData();
   const [translade, setTranslade] = useState(false);
 
@@ -43,6 +43,6 @@ function ListOfCategories() {
       {redereList(true, translade)}
     </>
   );
-}
-
-export { ListOfCategories };
+};
+export const ListOfCategories = React.memo(ListOfCategoriesComponent);
+// con react memo este componente no se volvera a renderizar a menos de que sus props del componente cambien

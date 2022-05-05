@@ -4,7 +4,7 @@ import { ListOfPhotoCard } from "@components/ListOfPhotoCard";
 import { useParams } from "react-router-dom";
 import Layout from "@components/Layout";
 
-export const Home = () => {
+const HomePage = () => {
   const { petId = 2 } = useParams();
   return (
     <Layout
@@ -16,3 +16,4 @@ export const Home = () => {
     </Layout>
   );
 };
+export const Home = React.memo(HomePage);
