@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const WebpackPwaManifestPlugin = require("webpack-pwa-manifest")
 
 const shouldAnalyze = process.argv.includes("--analyze");
 const plugins = [
@@ -13,6 +14,21 @@ const plugins = [
   new CopyWebpackPlugin({
     patterns: [{ from: "./src/assets/login.webp", to: "" }],
   }),
+  new WebpackPwaManifestPlugin({
+    name: 'Petgram - Tu app de fotos de mascotas',
+    shortname: 'Petgram 🐶',
+    description: 'Con Petgram puedes encontrar fotos de animales domésticos my fácilmente',
+    background_color: '#fff',
+    theme_color: '#b1a',
+    start_url: "/",
+    icons: [
+      {
+        src: path.resolve('src/assets/icon.png'),
+        sizes: [96, 128, 192, 256, 384, 512],
+        purpose: "any maskable"
+      }
+    ],
+  })
 ];
 
 if (shouldAnalyze) {
