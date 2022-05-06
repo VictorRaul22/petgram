@@ -2,6 +2,7 @@ import React from "react";
 import { PhotoCard } from "@components/PhotoCard";
 import { useQuery, gql } from "@apollo/client";
 import { Load } from "@components/Load";
+import PropType from "prop-types";
 
 const ANIMALS_QUERY = gql`
   query getPhotos($categoryId: ID) {
@@ -31,5 +32,8 @@ function ListOfPhotoCard({ categoryId }) {
     </ul>
   );
 }
+ListOfPhotoCard.propTypes = {
+  categoryId: PropType.string.isRequired,
+};
 
 export { ListOfPhotoCard };

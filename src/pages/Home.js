@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Layout from "@components/Layout";
 
 const HomePage = () => {
-  const { petId = 2 } = useParams();
+  const { petId = "2" } = useParams();
   return (
     <Layout
       title="Tu app de fotos de mascotas"

@@ -1,5 +1,6 @@
 import React from "react";
 import SubmitButton from "@components/SubmitButton";
+import PropTypes from "prop-types";
 import { useInputValue } from "../../hooks/useInputValue";
 import {
   Figure,
@@ -65,5 +66,15 @@ function CardForm({
     </Card>
   );
 }
-
+CardForm.propTypes = {
+  title: PropTypes.string.isRequired,
+  registered: PropTypes.bool.isRequired,
+  setRegistered: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  errorMsg: PropTypes.string,
+};
+CardForm.defaultProps = {
+  errorMsg: null,
+};
 export { CardForm };

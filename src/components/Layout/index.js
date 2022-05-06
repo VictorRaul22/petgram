@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import PropType from "prop-types";
 import { Div, Title, Subtitle } from "./styles";
 
 function Layout({ children, title, subtitle }) {
@@ -17,5 +18,10 @@ function Layout({ children, title, subtitle }) {
     </>
   );
 }
+Layout.propTypes = {
+  children: PropType.node.isRequired,
+  title: PropType.string,
+  subtitle: PropType.string,
+};
 
 export default Layout;

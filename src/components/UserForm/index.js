@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CardForm } from "@components/CardForm";
+import PropType from "prop-types";
 import { WraperUserForm, Cards } from "./styles";
 import { RegisterMutation } from "../../container/RegisterMutation";
 import { LoginMutation } from "../../container/LoginMutation";
@@ -61,5 +62,7 @@ function UserForm({ activateAuth }) {
     </WraperUserForm>
   );
 }
-
+UserForm.propTypes = {
+  activateAuth: PropType.func.isRequired,
+};
 export { UserForm };
