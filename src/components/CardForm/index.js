@@ -13,7 +13,7 @@ import {
   Card,
   Error,
 } from "./styles";
-
+//
 function CardForm({
   title,
   registered,
