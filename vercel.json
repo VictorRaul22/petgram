@@ -12,6 +12,14 @@
       "dest": "/$1.json"
     },
     {
+      "src": "(.*).png",
+      "dest": "/$1.png"
+    },
+    {
+      "src": "(.*).webp",
+      "dest": "/$1.webp"
+    },
+    {
       "src": "/.*",
       "dest": "index.html"
     }

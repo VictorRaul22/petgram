@@ -1,8 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+// const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const WebpackPwaManifestPlugin = require("webpack-pwa-manifest")
+const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+
 
 const shouldAnalyze = process.argv.includes("--analyze");
 const plugins = [
@@ -28,6 +30,24 @@ const plugins = [
         purpose: "any maskable"
       }
     ],
+  }),
+  new WorkboxWebpackPlugin.GenerateSW({
+    runtimeCaching: [
+      {
+        urlPattern: /https:\/\/(res.cloudinary.com|images.unsplash.com)/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'images'
+        }
+      },
+      {
+        urlPattern: /https:\/\/(petgram-server-victorr.vercel.app)/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'api'
+        }
+      }
+    ]
   })
 ];
 
@@ -51,7 +71,7 @@ const config = {
     clean: true,
   },
   resolve: {
-    extensions: [".js", ",jsx"],
+    extensions: [".js", ".jsx"],
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
       "@container": path.resolve(__dirname, "src/containers"),
@@ -61,7 +81,7 @@ const config = {
       "scheduler/tracing": "scheduler/tracing-profiling",
     },
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   module: {
     rules: [
       // Babel
@@ -92,35 +112,58 @@ const config = {
   plugins,
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()],
+    // minimizer: [new TerserPlugin()],
+
     splitChunks: {
+      chunks: "all",
       cacheGroups: {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
           name: "assets/ventor",
           chunks: "all",
           reuseExistingChunk: true,
-          priority: -40,
+          priority: -70,
         },
         react: {
-          test: /[\\/]node_modules[\\/](react|react-dom|react-helmet|react-icons|react-router-dom)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           name: "assets/react",
           chunks: "all",
           priority: -10,
+          reuseExistingChunk: true,
+        },
+        reactIcons: {
+          test: /[\\/]node_modules[\\/](react-icons)[\\/]/,
+          name: "assets/reactIcons",
+          chunks: "all",
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+        reactHelmet: {
+          test: /[\\/]node_modules[\\/](react-helmet)[\\/]/,
+          name: "assets/reactHelmet",
+          chunks: "all",
+          priority: -30,
+          reuseExistingChunk: true,
+        },
+        reactRouterDom: {
+          test: /[\\/]node_modules[\\/](react-router-dom)[\\/]/,
+          name: "assets/reactRouterDom",
+          chunks: "all",
+          priority: -40,
           reuseExistingChunk: true,
         },
         graphql: {
           test: /[\\/]node_modules[\\/](@apollo[\\/]client|graphql)[\\/]/,
           name: "assets/graphql",
           chunks: "all",
-          priority: -20,
+          priority: -50,
           reuseExistingChunk: true,
         },
         polyfill: {
           test: /[\\/]node_modules[\\/](intersection-observer)[\\/]/,
           name: "assets/polyfill",
-          chunks: "all",
-          priority: -30,
+          // chunks: "all",
+          priority: -60,
           reuseExistingChunk: true,
         },
       },
